@@ -189,3 +189,47 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-12-25 19:34:52
+
+show tables;  
+describe menu;
+
+-- CREATING VIEW -------------------------------------------------
+
+CREATE VIEW OrdersView AS SELECT OrderID, Quantity, TotalCost from Orders WHERE Quantity > 2;
+SELECT * from OrdersView;
+
+-- USING JOIN STATEMENT ---------------------------------------------
+
+SELECT o.OrderID, c.CustomerID, c.CustomerName, m.MenuName, 
+i.CourseName, i.StarterName, i.DessertName, o.TotalCost 
+from Orders as o INNER JOIN CustomerDetails as c ON o.CustomerID=c.CustomerID 
+INNER JOIN Menu as m ON m.MenuID=o.MenuID 
+LEFT JOIN MenuItems as i ON m.MenuItemsID=i.MenuItemsID 
+WHERE o.TotalCost > 150 Order by o.TotalCost;
+
+-- USING SUBQUERY -------------------------------------------
+
+SELECT MenuName from Menu WHERE MenuID = ANY(SELECT MenuID from Orders WHERE Quantity > 2);
+
+-- CREATING PROCEDURE ----------------------------------------------
+
+CREATE PROCEDURE GetMaxQuantity() SELECT MAX(Quantity) from Orders;
+CALL GetMaxQuantity();
+
+-- CREATING PREPARE STATEMENT -----------------------------------------
+
+PREPARE GetOrderDetail from 'SELECT OrderID, Quantity, TotalCost from Orders WHERE CustomerID = ?';
+
+SET @id = 1;
+EXECUTE GetOrderDetail USING @id;
+
+-- SECOND STORED PROCEDURE ----------------------------------------------------------
+
+DELIMITER //
+CREATE PROCEDURE CancelOrder(IN order_id INT)
+BEGIN
+DELETE FROM Orders WHERE OrderID = order_id;
+END //
+DELIMITER ;
+
+CALL CancelOrder(5);
