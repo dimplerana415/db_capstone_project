@@ -22,10 +22,15 @@ db-capstone-project/ │
    ├── 3-SalesBubbleChart.png │   
    ├── 4-CuisineSales&Profit.png │   
    └── 5-InteractiveDashboard.png  
+   
 ├── Database_Client.ipynb 
+
 ├── ER DIGRAM.mwb 
+
 ├── LittleLemon-tableau.twbx 
+
 ├── LittleLemonDB.sql 
+
 └── README.md
 
 ---
@@ -44,7 +49,7 @@ Key entities:
 - Order Delivery Status
 
 ### 📌 ER Diagram
-![ER Diagram](images/ER-Diagram.png)
+![ER Digram](images/ER-Digram.png)
 
 The data model is saved as a MySQL Workbench file:
 - **`ER DIGRAM.mwb`**
